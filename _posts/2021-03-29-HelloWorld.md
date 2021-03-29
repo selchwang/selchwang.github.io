@@ -32,3 +32,6 @@ const name = 'this is a code test'
 
 文字测试`Tag`*italy***bold**.
 
+### Emoji
+
+😎
