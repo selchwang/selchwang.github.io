@@ -78,7 +78,7 @@ netease_comment: false
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "Selch, 梁静茹十年老粉. <br> 零线开发者, 火线消防员, 博士练习生. <br> Transportation - ATM - Little Big Data."
+sidebar-about-description: "Selch, 梁静茹十年老粉. <br> 零线开发人员 / 打地鼠初心者 / 科研练习生. <br> Transportation, ATM, Big Data."
 sidebar-avatar: /img/avatar.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
