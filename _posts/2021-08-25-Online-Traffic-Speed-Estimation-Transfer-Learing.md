@@ -64,6 +64,17 @@ $$
 $$
 \mathcal{\hat V}_0=\mathbf {EST}(\mathcal{V}_t^+,\{\mathcal{P_e}|\forall e\in \mathcal{E}\})
 $$
+
+$$
+\mathcal{\hat V}_0=\{\hat v_{e,0}|\forall e \in \mathcal{E} \}
+$$
+
+$$
+\mathcal{V}^+_t=\{ \mathcal{v}_{e,t}|\forall e \in \mathcal{E}^S \cup \mathcal{E}^+_t\}
+$$
+
+其中EST为速度估计器（speed estimator)。
+
 其中$\mathcal{\hat V}_0=\{\hat v_{e,0}|\forall e \in \mathcal{E} \}$，$\mathcal{V}^+_t=\{ \mathcal{v}_{e,t}|\forall e \in \mathcal{E}^S \cup \mathcal{E}^+_t\}$，EST为速度估计器（speed estimator)。
 
 ## III. Transferable Graph Convolution Generative Autoencoder
