@@ -92,7 +92,7 @@ $$
 这里先提了一下文献12，说是采用了其中的图卷积操作，区别在于更关注道路的情况，也就是边的情况（文献12应该是关注于节点，也就是路口）。所以先做了一个图的转化，转为了**道路连通图（road-connectivity graph）**，顶点是道路，边是连通性。新的无向图$\mathcal{R}(\mathcal{E},\mathcal{A})$定义为：
 
 $$
-\mathcal{A}=\{ (e_1, e_2) | \big | \{ {\rm fr} (e_1), {\rm to} (e_1) \} \cap \{ {\rm fr} (e_2), {\rm to} (e_2) \} \big | \neq0 , \forall e_1, e_2 \in \mathcal{E} \}
+\mathcal{A} = \{ (e_1, e_2) | \big | \{ {\rm fr} (e_1), {\rm to} (e_1) \} \cap \{ {\rm fr} (e_2), {\rm to} (e_2) \} \big | \neq0 , \forall e_1, e_2 \in \mathcal{E} \}
 $$
 
 理解一下就是说，两个路的连通与否取决于他们是否有公共路口： ${\rm fr}(e)$ 和 ${\rm to}(e)$ 分别表示道路e的起始、终止路口，分别取两个道路两端的路口集合，如果有公共路口，则认为他们相连通。
@@ -103,7 +103,20 @@ $$
 Z={\rm GC}(X,A)=\sigma (\hat D^{-{1\over2}} \hat A \hat D^{-{1\over2}} XW + b)
 $$
 
-其中$X\in \mathbb R ^ {|\mathcal{E}| \times (|\mathcal{P}|+1)}$，输出$Z\in \mathbb R ^ {|\mathcal{E}| \times F}$，$\hat A\in \mathbb B ^ {|\mathcal{E}| \times |\mathcal{E}|} = \{\hat a_{ij}\} = A + I$，$\hat D = diag\{\hat a_{11}, \hat a_{22}, \dots \}$，$\sigma (\cdot)$是非线性激活函数。优化出的参数是$W\in \mathbb R ^ {(|\mathcal{P}|+1) \times F}$，$b \in \mathbb R ^{|\mathcal{E}| \times F}$。然后提了一句：
+其中
+$$
+X\in \mathbb R ^ {|\mathcal{E}| \times (|\mathcal{P}|+1)}
+\\
+Z\in \mathbb R ^ {|\mathcal{E}| \times F}
+\\
+\hat A\in \mathbb B ^ {|\mathcal{E}| \times |\mathcal{E}|} = \{\hat a_{ij}\} = A + I
+\\
+\hat D = diag\{\hat a_{11}, \hat a_{22}, \dots \}
+$$
+
+非线性激活函数$\sigma (\cdot)$，优化出的参数是$W\in \mathbb R ^ {(|\mathcal{P}|+1) \times F}$，以及$b \in \mathbb R ^{|\mathcal{E}| \times F}$。
+
+然后提了一句：
 
 > This propagation rule is motivated by the first-order approximation of Chebyshev polynomials of eigenvalues in the spectral domain [14]. It has been shown that such approximation can result in highly competitive performance for graph feature learning [12], [13].
 
