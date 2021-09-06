@@ -36,31 +36,41 @@ tags:
 ### 路网模型
 
 有向图G表示路网，路口集合N，构成路口的道路集合E：
+
 $$
 \mathcal{G}=(\mathcal{N}, \mathcal{E})
 $$
+
 序列T表示过去的时刻，t=0时即为当前时刻：
+
 $$
 \mathcal{T}=\{\ldots, -2, -1, 0\}
 $$
+
 速度用v表示，某路口e在t时刻的平均交通速度：$\mathcal{v}_{e,t}$；其他非时变量用P表示，某路口e的非时变属性：$\mathcal{P}_e$。
 
 ### 问题
 
 获取城市路网的速度地图：
+
 $$
 \mathcal{V}_0=\{\mathcal{v}_{e,0}|\forall e\in \mathcal{E}\}
 $$
+
 速度值来源于两部分，其一是道路上的测速传感器，其二是根据车辆的GPS数据构建出来的；将有传感器的路口表示为$\mathcal{E}^\mathcal{S}$；将无传感器的，可以由GPS数据计算出t时刻速度的路口表示为$\mathcal{E}^+_t$；则在t时刻未知的是：
+
 $$
 \mathcal{E}^-_t=\mathcal{E} \setminus (\mathcal{E}^S \cup \mathcal{E}^+_t)
 $$
+
 城市路网交通速度估计问题表示为：
+
 $$
 \mathbf {minimize \ MAPE}={1\over|\mathcal{E}^-_t|}\sum_{e\in \mathcal{E}^-_t} {|\hat v _ {e,0} - \mathcal{v_{e,0}}| \over \mathcal{v_{e,0}+\varepsilon}}
 $$
 
 其中$\varepsilon$为一个小正数以避免分母为0的情况，文中取值为0.01km/h；$\hat v _ {e,0}$为估计速度：
+
 $$
 \mathcal{\hat V}_0=\mathbf {EST}(\mathcal{V}_t^+,\{\mathcal{P_e}|\forall e\in \mathcal{E}\})
 \\
