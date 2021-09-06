@@ -100,7 +100,7 @@ $$
 随后是图卷积操作。输入为$\mathcal{E}$条道路的$\vert\mathcal{P}\vert+1$个特征（属性和速度），然后根据下面的传播规则得到F个潜在的数据特征，其中A是$\mathcal{R}$的邻接矩阵：
 
 $$
-Z={\rm GC}(X,A)= \sigma (\hat D^{- {1 \over 2}} \hat A \hat D^{-{1 \over 2}} XW + b)
+Z={\rm GC}(X,A)= \sigma (\hat D ^ {-{1 \over 2}} \hat A \hat D ^ {-{1 \over 2}} XW + b)
 $$
 
 其中$X\in \mathbb R ^ {\vert\mathcal{E}\vert \times (\vert\mathcal{P}\vert+1)}$，$Z\in \mathbb R ^ {\vert\mathcal{E}\vert \times F}$，$\hat A\in \mathbb B ^ {\vert\mathcal{E}\vert \times \vert\mathcal{E}\vert} = \{\hat a_{ij}\} = A + I$，$\hat D = diag\{\hat a_{11}, \hat a_{22}, \dots \}$。非线性激活函数$\sigma (\cdot)$，优化出的参数是$W\in \mathbb R ^ {(\vert\mathcal{P}\vert+1) \times F}$，以及$b \in \mathbb R ^{\vert\mathcal{E}\vert \times F}$。
