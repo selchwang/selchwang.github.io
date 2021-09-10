@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "论文浅尝 | Online Traffic Speed Estimation for Urban Road Networks with Few Data: A Transfer Learning Approach"
-date:       2021-08-25 1:28:00
+date:       2021-09-10 1:28:00
 author:     "Selch"
 header-style: text
 mathjax: true
@@ -11,13 +11,17 @@ tags:
   - 交通速度预测
   - 迁移学习
   - 图卷积网络
+  - 生成式对抗网络
+  - GCN
+  - GAN
 ---
+
+## Abstract
 
 - 问题：基于机器学习的预测方法依赖大量数据，数据不易得；
 - 方案：迁移学习
-  - 图卷积生成自动编码器（graph convolutional generative
-    autoencoder，GCGA），修改其计算图以减少参数规模；
-  - 用足量数据训练出预训练模型，将其复用到数据缺乏的网络中，只需要调整少量参数。
+  - 图卷积生成自动编码器（graph convolutional generative autoencoder，GCGA），修改其计算图以减少参数规模；
+  - 用足量数据训练出预训练模型，将其复用到数据缺乏的网络中，只需要调整少量参数；
   - 实验：预测效果好，训练时间短。
 
 ## I. Introduction
@@ -155,7 +159,7 @@ $$
 
 一方面，上述传播规则中得到的$W\in \mathbb R ^ {(\vert\mathcal{P}\vert+1) \times F}$是与道路规模$\vert \mathcal{E} \vert$无关的。
 
-另一方面，$b \in \mathbb R ^{\vert\mathcal{E}\vert \times F}$与道路结构相关。为二次训练的负担，将参数b分解：
+另一方面，$b \in \mathbb R ^{\vert\mathcal{E}\vert \times F}$与道路结构相关。为减轻二次训练的负担，将参数b分解：
 
 $$
 b \equiv B \kappa \mu
@@ -168,6 +172,36 @@ Z={\rm GC}(X,A)= \sigma (\hat D ^ {-{1 \over 2}} \hat A \hat D ^ {-{1 \over 2}} 
 $$
 
 ### D. 模型训练和迁移学习
+
+定义：
+
+- 预训练数据：稠密的数据
+
+- 训练数据：稀疏的数据
+
+数据集采样操作：随机移除一些道路的数据。从$\mathcal{V}_t^+$中采样M次，得到$\mathcal{V}_{t,m}^-$，其中m是数据集的序号索引。
+
+随后用预训练数据对生成器、鉴别器进行训练，
+
+每次迭代中，输入$\mathcal{V}_{t,m}^-$到生成器，得到$\hat {\mathcal{V}}_{t,m}^-$，作为对$\mathcal{V}_t^+$的一次估计。
+
+生成器的损失函数采用平均MSE：
+
+$$
+L^G = {1 \over \vert \mathcal{T} \vert M} \sum_{t \in \mathcal{T}} \sum_{m=1}^M {\rm MSE}_{t,m}
+$$
+
+鉴别器的损失函数采用二值交叉熵：
+
+$$
+L^D = - \sum_{n=1}^N [\mathcal{y}_n \log \hat {\mathcal{y}}_n + (1 - \mathcal{y}_n) \log (1 - \hat {\mathcal{y}}_n)]
+$$
+
+其中N是测试样本总量，$\mathcal{y}_n$和$\hat {\mathcal{y}}_n$是事实和鉴别器的评估值。
+
+网络的参数用Adam算法优化。
+
+最后训练结果的参数包括**网络相关的**和**网络无关的**，在用到其他数据集时只需要重新调优网络相关的参数B，这样就打到了迁移的目的。
 
 ## IV. Case Studies
 
@@ -217,6 +251,33 @@ $$
 
 ------
 
+## 我的感想
+
+这篇论文断断续续地读了两周，虽然期间干了很多开发的杂活儿吧，但感觉效率还是太低了。
+
+之前只断断续续地不成系统地看过一些AI的东西，不过大概能感觉到本文最大的创新就是参数分解$b \equiv B \kappa \mu$那步。
+
+> We ground this work on a graph convolutional generative autoencoder that can generate the estimations for an entire transportation network in one go, and modify its internal computation graph to reduce the size of network topology-dependent model parameters. Subsequently, pre-trained models from road networks with massive historical data can be re-used in other networks with few data, which are only employed to adjust a small number of parameters.
+
+摘要里说的*modify its internal computation graph to reduce the size of network topology-dependent model parameters* 和 *adjust a small number of parameters* 基本都是在说这个事。
+
+模型的设计方面，我没仔细看另一篇论文，不过感觉没太大区别。
+
+![](/img/online-traffic-speed-transfer-3.PNG)
+
+![](/img/online-traffic-speed-transfer-4.PNG)
+
+收获的话大概是：
+
+- 了解了这类论文的格式，先定义一些符号描述问题，接着介绍算法模型，最后描述实验。也学到一些英语的表达；
+
+- 学到了Latex公式的写法，还挺简单的；
+
+- 感觉在一些不太重要的地方读的太细了，下一篇要抓住重点。
+
+
+------
+
 ## 一些英语
 
 - plethora n. 过多，过量，过剩 Their accomplishments are established on **a plethora of** historical GPS records.
@@ -235,3 +296,5 @@ $$
 - with respect to 考虑到
 - enclose v. 把…围住，封入，（随函）附入 parameter b encloses road network topological information
 - amend v. 修正
+- comprise v. 包括，由…组成
+- agnostic adj. 不可知的
