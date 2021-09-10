@@ -91,13 +91,13 @@ $$
 
 ### A. 图卷积操作
 
-#### 基础性介绍：
+#### 基础性介绍
 
 1. 引出对图卷积的一个基本认识：对某节点，与其相邻的节点对其影响更大，距离越远影响越小且在传播过程中迅速衰减 ➡ 输出的图中，任意节点反映了其周围的特征；
 
 2. 对多序列的图卷积操作，由于自乘邻居矩阵，可以有更大的数据融合范围。
 
-#### 具体的做法：
+#### 具体的做法
 
 这里先提了一下文献12，说是采用了其中的图卷积操作，区别在于更关注道路的情况，也就是边的情况（文献12应该是关注于节点，也就是路口）。所以先做了一个图的转化，转为了**道路连通图（road-connectivity graph）**，顶点是道路，边是连通性。新的无向图$\mathcal{R}(\mathcal{E},\mathcal{A})$定义为：
 
@@ -139,6 +139,35 @@ $$
 
 #### 目标函数
 
+$$
+\min_{\theta ^ G} \max_{\theta ^ D} L = \mathbb E [\log D(\mathcal{V_0^+}, \theta ^ D)] + \mathbb E [\log (1 - D(G((\mathcal{V_0^+}, \theta ^ D)), \theta ^ D))]
+$$
+
+其中$\theta ^ G$和$\theta ^ D$分别是生成器和鉴别器的参数集，$G(\cdot, \theta ^ G)$和$D(\cdot, \theta ^ D)$分别是损失函数。
+
+初始化将$\theta ^ G$设置为随机值，使鉴别器很容易拒绝，导致L值较大。训练算法调整两个参数集生成、鉴别“真实数据”，重复训练过程直到生成器可以成功骗过鉴别器。
+
+经过训练后，$\theta ^G$可以被用于估计城市路网速度数据。
+
+### C. 潜在信息迁移器
+
+首先在说为什么$\theta ^G$可以迁移。
+
+一方面，上述传播规则中得到的$W\in \mathbb R ^ {(\vert\mathcal{P}\vert+1) \times F}$是与道路规模$\vert \mathcal{E} \vert$无关的。
+
+另一方面，$b \in \mathbb R ^{\vert\mathcal{E}\vert \times F}$与道路结构相关。为二次训练的负担，将参数b分解：
+
+$$
+b \equiv B \kappa \mu
+$$
+
+其中$B \in \mathbb R ^ {\vert \mathcal{E} \vert \times K}$，$\kappa \in \mathbb R ^ {K \times F}$，$\mu^{F \times F}$。与F类似，此处的K是用户定义的超参数，用于定义子参数集的大小。这样与路网相关的就只有参数B，在小K值下训练更加高效。图卷积操作中的传播规则被修正为：
+
+$$
+Z={\rm GC}(X,A)= \sigma (\hat D ^ {-{1 \over 2}} \hat A \hat D ^ {-{1 \over 2}} XW + B \kappa \mu)
+$$
+
+### D. 模型训练和迁移学习
 
 ## IV. Case Studies
 
@@ -202,3 +231,7 @@ $$
 - diffuse v. 散布，传播 diffuse over the network
 - manipulation n. 操作 **manipulation agent**
 - two sets of tunable parameters are adopted
+- hypothesis n. 假设 is established on the hypothesis that
+- with respect to 考虑到
+- enclose v. 把…围住，封入，（随函）附入 parameter b encloses road network topological information
+- amend v. 修正
