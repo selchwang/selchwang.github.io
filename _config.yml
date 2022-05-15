@@ -23,7 +23,9 @@ minimal_mistakes_skin: default
 search: true
 # locale: zh
 
+url: ""
 baseurl: ""
+repository: "selchwang/selchwang.github.io"
 
 # Build settings
 markdown: kramdown
