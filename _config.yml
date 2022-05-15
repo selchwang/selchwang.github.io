@@ -23,7 +23,7 @@ minimal_mistakes_skin: default
 search: true
 # locale: zh
 
-url: "https://selchwang.github.io"
+url: "https://www.selchwang.com"
 repository: "selchwang/selchwang.github.io"
 
 # Build settings
@@ -93,6 +93,10 @@ defaults:
       read_time: false
       comments: true
       share: false
+      show_date: true
+      breadcrumbs: true
+      related: true
+      date_format: "%Y-%m-%d"
   # _pages
   - scope:
       path: "_pages"
