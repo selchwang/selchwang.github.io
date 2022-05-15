@@ -24,6 +24,7 @@ search: true
 # locale: zh
 
 url: "https://www.selchwang.com"
+baseurl: ""
 repository: "selchwang/selchwang.github.io"
 
 # Build settings
