@@ -24,7 +24,6 @@ search: true
 # locale: zh
 
 baseurl: ""
-repository: "selchwang/selchwang.github.io"
 
 # Build settings
 markdown: kramdown
