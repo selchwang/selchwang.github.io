@@ -5,7 +5,7 @@ excerpt_separator: "<!--more-->"
 share: false
 mathjax: true
 categories:
-  - blog
+  - developer
 tags:
   - 变分推断
 related: false
@@ -24,7 +24,7 @@ gallery2:
 
 假设模型是联合概率分布$p(x,z)$，其中$x$是观测变量，$z$是隐变量，包括参数。目标是学习后验概率分布$p(z \vert x)$，用模型进行概率推理。
 
-但直接估计这个复杂分布是参数比较困难，故用一个概率分布$q(z)$来近似条件概率分布$p(z \vert x)$，用KL散度$D(q(z) \Vert p(z \vert x))$计算两者的相似度，$q(z)$称为变分分布（variational distribution）。如果能找到与$p(z \vert x)$在KL散度意义下最近的分布$q^*(z)$，则可以用其近似原分布。
+但直接估计这个复杂分布的参数比较困难，故用一个概率分布$q(z)$来近似条件概率分布$p(z \vert x)$，用KL散度$D(q(z) \Vert p(z \vert x))$计算两者的相似度，$q(z)$称为变分分布（variational distribution）。如果能找到与$p(z \vert x)$在KL散度意义下最近的分布$q^*(z)$，则可以用其近似原分布。
 
 KL散度可以写成：
 

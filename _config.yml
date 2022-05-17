@@ -63,14 +63,14 @@ plugins:
 author:
   name   : "Selch"
   avatar : "/assets/images/ki.jpg"
-  bio    : "👆我永远喜欢小希. <br> 梁静茹十年老粉. <br> 零线开发人员 / 科研练习生."
+  bio    : "💛 我永远喜欢小希. <br><br>🎤 梁静茹十年老粉. <br><br>🧱 负一线开发人员. <br><br>🧙 Up to no good."
   links:
     # - label: "Website"
     #   icon: "fas fa-fw fa-link"
     #   url: "https://"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "https://github.com/"
+      url: "https://github.com/selchwang"
 
 comments:
   provider: "disqus"
@@ -81,7 +81,7 @@ footer:
   links:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "https://github.com/"
+      url: "https://github.com/selchwang"
 
 defaults:
   # _posts
